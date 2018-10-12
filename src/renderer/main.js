@@ -3,13 +3,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+import git from 'nodegit'
 
+Vue.use(iView)
+if (!process.env.IS_WEB) Vue.prototype.$git = git
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: {App},
   router,
   store,
   template: '<App/>'
