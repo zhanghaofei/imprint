@@ -1,18 +1,12 @@
 <template>
-  <div class="editor-wrapper">
-    <div :id="editorId" class="editor"></div>
-  </div>
+  <div :id="editorId" class="editor"></div>
 </template>
 
 <script>
   import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
   export default {
-    name: 'monacoEditor',
+    name: 'baseMonacoEditor',
     props: {
-      // options: {
-      //   type: Object,
-      //   default: {}
-      // },
       width: {
         type: String,
         default: '100%'
@@ -20,6 +14,10 @@
       height: {
         type: String,
         default: '100%'
+      },
+      value: {
+        type: String,
+        default: ''
       }
     },
     data () {
@@ -35,24 +33,20 @@
     },
     mounted () {
       const editor = monaco.editor.create(document.getElementById(this.editorId), {
-        value: `function hello() {\n\talert('Hello world!');\n}`,
+        value: this.value,
         language: 'javascript',
         automaticLayout: true
       })
       const vm = this
-      editor.onKeyUp(function (e) {
-        console.log(e)
-        vm.$emit('onKeyUp', e.browserEvent)
+      editor.onDidChangeModelContent(function (e) {
+        vm.$emit('onDidChangeModelContent', e)
+        vm.$emit('input', editor.getValue())
       })
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .editor-wrapper{
-    width: 100%;
-    height: 100%;
-  }
   .editor{
     /*width: 300px;*/
     /*height: 100px;*/
