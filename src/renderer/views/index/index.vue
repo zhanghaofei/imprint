@@ -3,7 +3,7 @@
 
     <Split v-model="split1" class="area-work-split">
       <div slot="left" class="area left"  @input="change">
-<div id="editor"></div>
+        <monaco-editor @onKeyUp="change"></monaco-editor>
       </div>
       <div slot="right" class="area right" v-html="compiledMarkdown"></div>
     </Split>
@@ -13,9 +13,12 @@
 <script>
   import _ from 'lodash'
   import MarkdownIt from 'markdown-it'
-  import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+  import monacoEditor from '@c/monacoEditor/monacoEditor'
+
   export default {
-    components: {},
+    components: {
+      monacoEditor
+    },
     data () {
       return {
         split1: 0.5,
@@ -30,16 +33,11 @@
     },
     methods: {
       change: _.throttle(function (e) {
+        console.log(e)
         this.input = e.target.innerText
       }, 500)
     },
     mounted () {
-      console.log(document.getElementById('editor'))
-      monaco.editor.create(document.getElementById('editor'), {
-        value: 'function hello() {\n\talert(\'Hello world!\');\n}',
-        language: 'javascript',
-        automaticLayout: true
-      })
     }
   }
 </script>

@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'electron-vue-demo'
+    name: 'imprint'
   }
 </script>
 
@@ -16,7 +16,7 @@
     height: 100%;
   }
   #app {
-    padding: 10px;
+    /*padding: 10px;*/
     height: 100%;
   }
 </style>
