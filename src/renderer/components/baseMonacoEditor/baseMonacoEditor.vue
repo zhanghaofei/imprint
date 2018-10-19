@@ -24,7 +24,8 @@
         default () {
           return {
             language: 'markdown',
-            automaticLayout: true
+            automaticLayout: true,
+            lineNumbersMinChars: 1
           }
         }
       }
@@ -38,26 +39,31 @@
         return `editor${this._uid}`
       }
     },
+    methods: {
+    },
     mounted () {
       this.options.value = this.value
-      const editor = monaco.editor.create(document.getElementById(this.editorId), this.options)
+      this.editor = monaco.editor.create(document.getElementById(this.editorId), this.options)
       const vm = this
-      editor.onDidChangeModelContent(function (e) {
+      this.editor.onDidChangeModelContent(function (e) {
         vm.$emit('onDidChangeModelContent', e)
-        vm.$emit('input', editor.getValue())
+        vm.$emit('input', this.editor.getValue())
       })
-      editor.onMouseMove(function (e) {
+      this.editor.onMouseMove(function (e) {
         vm.$emit('onMouseMove', e)
       })
+      //
+      this.getSelections = this.editor.getSelections
     }
   }
 </script>
 
 <style scoped lang="scss">
   .editor{
-    /*width: 300px;*/
-    /*height: 100px;*/
-    width: 100%;
-    height: 100%;
+  }
+
+
+  .monaco-editor .margin {
+    background-color: #f3f3f3;
   }
 </style>

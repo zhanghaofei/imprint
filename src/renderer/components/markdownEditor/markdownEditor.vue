@@ -1,8 +1,40 @@
 <template>
   <div class="markdown-editor">
-    <div class="top-area"></div>
+    <div class="top-area">
+      <Dropdown>
+        <Button size="small" type="primary">
+          标题<Icon type="ios-arrow-down"></Icon>
+        </Button>
+        <DropdownMenu slot="list">
+          <DropdownItem><Tooltip content="# H1" theme="light" :delay="500"><H1>H1</H1></Tooltip></DropdownItem>
+          <DropdownItem><Tooltip content="## H1" theme="light" :delay="500"><H2>H2</H2></Tooltip></DropdownItem>
+          <DropdownItem><Tooltip content="标题" theme="light" :delay="500"><H3>H3</H3></Tooltip></DropdownItem>
+          <DropdownItem><Tooltip content="标题" theme="light" :delay="500"><H4>H4</H4></Tooltip></DropdownItem>
+          <DropdownItem><Tooltip content="标题" theme="light" :delay="500"><H5>H5</H5></Tooltip></DropdownItem>
+          <DropdownItem><Tooltip content="标题" theme="light" :delay="500"><H6>H6</H6></Tooltip></DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <Divider type="vertical" />
+      <ButtonGroup>
+        <Button size="small" type="primary"><Tooltip content="标题" theme="light" :delay="500">B</Tooltip></Button>
+        <Button size="small" type="primary"><Tooltip content="标题" theme="light" :delay="500">I</Tooltip></Button>
+        <Button size="small" type="primary"><Tooltip content="标题" theme="light" :delay="500">S</Tooltip></Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button size="small" type="primary">
+          <Poptip>
+            啊啊
+            <div slot="content">
+
+              <Button type="primary">插入</Button>
+            </div>
+          </Poptip>
+        </Button>
+      </ButtonGroup>
+    </div>
     <div class="middle-area">
       <baseMonacoEditor
+        ref="editor"
         v-model="myValue"
         @onDidChangeModelContent="onDidChangeModelContent"
         @onMouseMove="onMouseMove"
@@ -35,11 +67,10 @@
         this.$emit('input', this.myValue)
       }, 100),
       onMouseMove: _.debounce(function (e) {
-        console.log(e)
-        console.log(e.target.element.innerText)
       }, 1000)
     },
     created () {
+      console.log(this.$refs)
     }
   }
 </script>
@@ -53,18 +84,19 @@
 
     .top-area{
       flex: none;
-      height: 50px;
-      border: dashed 1px;
+      padding: 5px;
+      border-bottom: solid 1px #e6e6e6;
     }
     .middle-area{
       flex: 1;
     }
     .bottom-area{
       flex: none;
-      height: 50px;
-      border: dashed 1px;
+      /*height: 40px;*/
+      /*border: dashed 1px;*/
 
     }
+
 
   }
 </style>
