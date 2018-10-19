@@ -1,5 +1,5 @@
 <template>
-  <div :id="editorId" class="editor"></div>
+  <div :id="editorId" class="editor" :style="{ width, height }"></div>
 </template>
 
 <script>
@@ -18,6 +18,15 @@
       value: {
         type: String,
         default: ''
+      },
+      options: {
+        type: Object,
+        default () {
+          return {
+            language: 'markdown',
+            automaticLayout: true
+          }
+        }
       }
     },
     data () {
@@ -29,18 +38,16 @@
         return `editor${this._uid}`
       }
     },
-    methods: {
-    },
     mounted () {
-      const editor = monaco.editor.create(document.getElementById(this.editorId), {
-        value: this.value,
-        language: 'javascript',
-        automaticLayout: true
-      })
+      this.options.value = this.value
+      const editor = monaco.editor.create(document.getElementById(this.editorId), this.options)
       const vm = this
       editor.onDidChangeModelContent(function (e) {
         vm.$emit('onDidChangeModelContent', e)
         vm.$emit('input', editor.getValue())
+      })
+      editor.onMouseMove(function (e) {
+        vm.$emit('onMouseMove', e)
       })
     }
   }

@@ -2,9 +2,13 @@
   <div class="markdown-editor">
     <div class="top-area"></div>
     <div class="middle-area">
-      <baseMonacoEditor v-model="myValue" @onDidChangeModelContent="onDidChangeModelContent"></baseMonacoEditor>
+      <baseMonacoEditor
+        v-model="myValue"
+        @onDidChangeModelContent="onDidChangeModelContent"
+        @onMouseMove="onMouseMove"
+      ></baseMonacoEditor>
     </div>
-    <div class="bottom-area" v-html="myValue"></div>
+    <div class="bottom-area"></div>
 
   </div>
 </template>
@@ -18,7 +22,7 @@
     props: {
       value: {
         type: String,
-        default: `# H1\n## H2\n内容`
+        default: ''
       }
     },
     data () {
@@ -27,10 +31,13 @@
       }
     },
     methods: {
-      onDidChangeModelContent: _.throttle(function (e) {
-        console.log(e)
+      onDidChangeModelContent: _.debounce(function (e) {
         this.$emit('input', this.myValue)
-      }, 500)
+      }, 100),
+      onMouseMove: _.debounce(function (e) {
+        console.log(e)
+        console.log(e.target.element.innerText)
+      }, 1000)
     },
     created () {
     }

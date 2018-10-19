@@ -21,7 +21,8 @@
     data () {
       return {
         split1: 0.5,
-        markdown: `function hello() {\n\talert('Hello world!');\n}`
+        // markdown: `function hello() {\n\talert('Hello world!');\n}`
+        markdown: `# H1\n## H2\n内容`
       }
     },
     computed: {
