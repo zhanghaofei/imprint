@@ -39,6 +39,7 @@
         @onDidChangeModelContent="onDidChangeModelContent"
         @onMouseMove="onMouseMove"
       ></baseMonacoEditor>
+      <baseMonacoEditor> </baseMonacoEditor>
     </div>
     <div class="bottom-area"></div>
 
@@ -70,7 +71,7 @@
       }, 1000)
     },
     created () {
-      console.log(this.$refs)
+      // console.log(this.$refs)
     }
   }
 </script>

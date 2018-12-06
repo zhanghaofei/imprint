@@ -47,7 +47,7 @@
       const vm = this
       this.editor.onDidChangeModelContent(function (e) {
         vm.$emit('onDidChangeModelContent', e)
-        vm.$emit('input', this.editor.getValue())
+        vm.$emit('input', vm.editor.getValue())
       })
       this.editor.onMouseMove(function (e) {
         vm.$emit('onMouseMove', e)
